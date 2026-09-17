@@ -1,225 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Piano Interactivo Mobile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #111;
+      font-family: sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .piano-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    .keys {
+      display: flex;
+      position: relative;
+      height: 280px;
+      max-width: 100%;
+    }
+
+    /* Teclas Blancas */
+    .key {
+      position: relative;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0 0 5px 5px;
+      width: calc(100vw / 8 - 4px);
+      max-width: 60px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: background 0.05s ease, transform 0.05s ease;
+    }
+
+    .key kbd {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .key .sound {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    /* Teclas Negras */
+    .keym {
+      position: absolute;
+      background: #222;
+      border: 1px solid #000;
+      border-radius: 0 0 3px 3px;
+      width: calc(100vw / 14);
+      max-width: 35px;
+      height: 60%;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 10px;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .keym .kbd2 {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    .keym .soundm {
+      font-size: 0.6rem;
+      color: #aaa;
+    }
+
+    /* Posicionamiento exacto de teclas negras sobre las blancas */
+    .keym[data-key="87"] { left: calc(60px * 0.7); }  /* Do# / W */
+    .keym[data-key="82"] { left: calc(60px * 1.7); }  /* Re# / R */
+    .keym[data-key="84"] { left: calc(60px * 3.7); }  /* Fa# / T */
+    .keym[data-key="89"] { left: calc(60px * 4.7); }  /* Sol# / Y */
+    .keym[data-key="73"] { left: calc(60px * 5.7); }  /* La# / I */
+
+    @media (max-width: 500px) {
+      .keym[data-key="87"] { left: calc((100vw / 8 - 4px) * 0.7); }
+      .keym[data-key="82"] { left: calc((100vw / 8 - 4px) * 1.7); }
+      .keym[data-key="84"] { left: calc((100vw / 8 - 4px) * 3.7); }
+      .keym[data-key="89"] { left: calc((100vw / 8 - 4px) * 4.7); }
+      .keym[data-key="73"] { left: calc((100vw / 8 - 4px) * 5.7); }
+    }
+
+    /* Feedback visual al presionar */
+    .key.sonando {
+      background: #e0e0e0;
+      transform: translateY(2px);
+      box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+    }
+
+    .keym.sonando {
+      background: #444;
+      transform: translateY(2px);
+    }
+  </style>
 </head>
 <body>
 
+  <div class="piano-container">
+    <div class="keys">
+      <!-- Teclas Blancas -->
+      <div data-key="65" class="key"><kbd>A</kbd><span class="sound">Do</span></div>
+      <div data-key="83" class="key"><kbd>S</kbd><span class="sound">Re</span></div>
+      <div data-key="68" class="key"><kbd>D</kbd><span class="sound">Mi</span></div>
+      <div data-key="70" class="key"><kbd>F</kbd><span class="sound">Fa</span></div>
+      <div data-key="71" class="key"><kbd>G</kbd><span class="sound">Sol</span></div>
+      <div data-key="72" class="key"><kbd>H</kbd><span class="sound">La</span></div>
+      <div data-key="74" class="key"><kbd>J</kbd><span class="sound">Si</span></div>
 
-  <div class="keys">
-    <div data-key="65" class="key">
-      <kbd> A </kbd>
-      <span class="sound">Do - C</span>
+      <!-- Teclas Negras (Sostenidos) -->
+      <div data-key="87" class="keym"><kbd class="kbd2">W</kbd><span class="soundm">Do#</span></div>
+      <div data-key="82" class="keym"><kbd class="kbd2">R</kbd><span class="soundm">Re#</span></div>
+      <div data-key="84" class="keym"><kbd class="kbd2">T</kbd><span class="soundm">Fa#</span></div>
+      <div data-key="89" class="keym"><kbd class="kbd2">Y</kbd><span class="soundm">Sol#</span></div>
+      <div data-key="73" class="keym"><kbd class="kbd2">I</kbd><span class="soundm">La#</span></div>
     </div>
-
-        <div data-key="87" class="keym">
-          <kbd class='kbd2'> W </kbd>
-          <span class="soundm">Do m</span>
-        </div>
-
-    <div data-key="83" class="key">
-      <kbd> S </kbd>
-      <span class="sound">Re - D</span>
-    </div>        
-
-    <div data-key="68" class="key">
-      <kbd> D </kbd>
-      <span class="sound">Mi - E</span>
-    </div>
-
-          <div data-key="82" class="keym">
-            <kbd class='kbd2'> R</kbd>
-            <span class="soundm">Mi m</span>
-          </div>
-
-    <div data-key="70" class="key">
-      <kbd> F </kbd>
-      <span class="sound">Fa - F</span>
-    </div>
-
-          <div data-key="84" class="keym">
-            <kbd class='kbd2'> T</kbd>
-            <span class="soundm">Mi m</span>
-          </div>
-
-    <div data-key="71" class="key">
-      <kbd> G </kbd>
-      <span class="sound">Sol - G</span>
-    </div>
-
-    <div data-key="72" class="key">
-      <kbd> H </kbd>
-      <span class="sound">La - A</span>
-    </div>
-
-          <div data-key="89" class="keym">
-            <kbd class='kbd2'> Y </kbd>
-            <span class="soundm">La m</span>
-          </div>
-
-    <div data-key="74" class="key">
-      <kbd> J </kbd>
-      <span class="sound">Si - B</span>
-    </div>
-
-          <div data-key="73" class="keym">
-            <kbd class='kbd2'> I </kbd>
-            <span class="soundm">Si m</span>
-          </div>
-    
   </div>
 
+  <!-- Sonidos corregidos -->
   <audio class="notes" data-key="65" src="sounds/notes/c.wav"></audio>
   <audio class="notes" data-key="83" src="sounds/notes/d.wav"></audio>
-  <audio class="notes" data-key="68" src="sounds/notes/f.wav"></audio>
-  <audio class="notes" data-key="70" src="sounds/notes/g.wav"></audio>
-  <audio class="notes" data-key="71" src="sounds/notes/a.wav"></audio>
-  <audio class="notes" data-key="72" src="sounds/notes/b.wav"></audio>
-  <audio class="notes" data-key="74" src="sounds/notes/c.wav"></audio>
+  <audio class="notes" data-key="68" src="sounds/notes/e.wav"></audio>
+  <audio class="notes" data-key="70" src="sounds/notes/f.wav"></audio>
+  <audio class="notes" data-key="71" src="sounds/notes/g.wav"></audio>
+  <audio class="notes" data-key="72" src="sounds/notes/a.wav"></audio>
+  <audio class="notes" data-key="74" src="sounds/notes/b.wav"></audio>
   
   <audio class="notes" data-key="87" src="sounds/notes/cc.wav"></audio>
   <audio class="notes" data-key="82" src="sounds/notes/eb.wav"></audio>
   <audio class="notes" data-key="84" src="sounds/notes/ff.wav"></audio>
   <audio class="notes" data-key="89" src="sounds/notes/gg.wav"></audio>
   <audio class="notes" data-key="73" src="sounds/notes/bb.wav"></audio>
-  <audio class="premio" src=''></audio>
 
-<script>
-  function quitarTransition(evento) {
-    if (evento.propertyName !== 'transform') return;
-    this.classList.remove('sonando');
-  }
-  function sonar(evento) {
-    const notes = document.querySelector('.notes');
-    const audio = document.querySelector(`audio[data-key="${evento.keyCode}"]`);
-    const key = document.querySelector(`div[data-key="${evento.keyCode}"]`);
-    if (!audio) return;
-    key.classList.add('sonando');
-    audio.currentTime = 0;
-    audio.play();
-    console.log(evento.keyCode)
-  }
-  const keys = document.querySelectorAll('.key');
-  keys.forEach(key => key.addEventListener('transitionend', quitarTransition));
-  window.addEventListener('keydown', sonar);
+  <script>
+    function reproducirNota(keyCode) {
+      const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${keyCode}"]`);
+      if (!audio || !key) return;
 
-  const keys2 = document.querySelectorAll('.keym');
-  keys2.forEach(key2 => key2.addEventListener('transitionend', quitarTransition));
-  window.addEventListener('keydown', sonar);
+      key.classList.add('sonando');
+      audio.currentTime = 0;
+      audio.play();
 
-	const pressed = [];
-	const keaneCode = 'asdasdg'
-	const noBasta = 'ghhjjjjhgassddddsafgghhhhgfs'
-  const creoTi = 'jfhdjfhd'
-	const premio = document.querySelector('.premio')
-  
-
-	window.addEventListener('keyup', (e) => {
-		console.log(e.key);
-		pressed.push(e.key);
-		pressed.splice(-noBasta.length -1, pressed.length - noBasta.length)
-		
-		 if (pressed.join('').includes(noBasta))
-    {
-    premio.src="sounds/fdv-no_basta.mp3";
-      console.log("No Basta");
-    premio.play();
+      setTimeout(() => {
+        key.classList.remove('sonando');
+      }, 150);
     }
-    else if (pressed.join('').includes(keaneCode))
-    {
-    premio.src="sounds/keane-nothing_in_my_way.mp3";
-      console.log("All right! Let's hear some keane")
-    premio.play()
-    }
-     else if (pressed.join('').includes(creoTi))
-    {
-    premio.src="sounds/reik-creo_en_ti.mp3";
-      console.log("Creo en ti y es este amor")
-    premio.play()
-    }
-    
-	})
-</script>
-<style>
-html {
-  font-size: 10px;
-  background: url('piano.png') bottom center;
-  background-size: cover;
-}
-body {
-  margin: 0;
-  padding: 0;
-  overflow-y:hidden;
-  
-  min-height:100vh;
-  
-  align-items: center;
-  justify-content: center;
-}
-.keys {
-  display: flex;
-  flex: 1;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-}
 
-.key {
-  border: .4rem solid #ffc600;
-  border-radius: .5rem;
-  margin: 2rem;
-  font-size: 1.5rem;
-  padding: 1rem .5rem;
-  transition: all .07s ease;
-  width: 10rem;
-  text-align: center;
-  color: white;
-  background: rgba(0,0,0,0.8);
-  text-shadow: 0 0 .5rem black;
-}
-.keym {
-  border: .2rem solid #ffc600;
-  border-radius: .5rem;
-  margin: .5rem;
-  font-size: 1rem;
-  padding: .5rem;
-  transition: all .07s ease;
-  width: 3rem;
-  height: 3rem;
-  text-align: center;
-  color: white;
-  background: rgba(0,0,0,0.8);
-  text-shadow: 0 0 .5rem black;
-}
-.sonando {
-  transform: scale(1.1);
-  border-color: #00c6ff;
-  box-shadow: 0 0 1rem #00c6ff;
-}
+    // 1. Evento Teclado Fisico
+    window.addEventListener('keydown', (e) => {
+      reproducirNota(e.keyCode);
+    });
 
-kbd {
-  display: block;
-  font-size: 4rem;
-}
-.kbd2 {
-  display: block;
-  font-size: 1rem;
-}
+    // 2. Evento Tactil y Click para Moviles y Mouse
+    const todasLasTeclas = document.querySelectorAll('.key, .keym');
 
-.sound {
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: .1rem;
-  color: #ffc600;
-}
-.soundm {
-  font-size: .6rem;
-  text-transform: uppercase;
-  letter-spacing: .1rem;
-  color: #ffc600;
-}
-</style>
+    todasLasTeclas.forEach(tecla => {
+      // Evento para tocar en pantalla móvil
+      tecla.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Evita comportamiento por defecto (zoom/scroll)
+        const keyCode = tecla.getAttribute('data-key');
+        reproducirNota(keyCode);
+      });
+
+      // Evento para click de mouse (escritorio)
+      tecla.addEventListener('mousedown', () => {
+        const keyCode = tecla.getAttribute('data-key');
+        reproducirNota(keyCode);
+      });
+    });
+  </script>
 </body>
 </html>
