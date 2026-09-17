@@ -2,16 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link async="async" href="" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link async="async" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> 
-    <script async='async' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operaciones Matemáticas</title>
 
-    <link async="async" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Metatags para PWA e Iconos -->
+  <link rel="icon" type="image/png" href="operaciones_logo.png">
+  <link rel="apple-touch-icon" href="operaciones_logo.png">
+  <meta name="theme-color" content="#4fdb98">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Matemáticas">
+  <link rel="manifest" href="manifest.json">
 
-    <link async="async" href="https://fonts.googleapis.com/css?family=Nova+Square|Roboto|Raleway|Satisfy|Lobster" rel="stylesheet" />
-  <title>Operaciones Matematicas</title>
+  <!-- Estilos y Librerías -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nova+Square|Roboto|Raleway|Satisfy|Lobster">
+
   <style>
+    :root {
+      --color: #4fdb98;
+    }
+    body {
+      margin: 30px 20px;
+      text-align: center;
+    }
     #progressBarContainer {
       width: 100%;
       background-color: #ddd;
@@ -25,267 +41,271 @@
       text-align: center;
       color: white;
       border-radius: 5px;
+      line-height: 20px;
+      font-weight: bold;
+    }
+    .btn {
+      background-color: transparent;
+      border-color: var(--color);
+      color: var(--color);
+    }
+    .btn:hover {
+      background-color: var(--color);
+      color: white;
+    }
+    #expresion {
+      font-size: 50px;
+      color: var(--color);
+    }
+    img {
+      height: 100px;
+    }
+    input {
+      width: 150px;
+      height: 80px;
+      font-size: 56px;
+      text-align: center;
+    }
+    @media only screen and (max-width: 800px) {
+      #translator { background: var(--color); }
     }
   </style>
-  <style>
-            :root{
-            --color:#4fdb98;
-          }
-         body{margin:30 20}  
-
-         .btn{
-          background-color: transparent;
-          border-color: var(--color);
-          color:var(--color);}
-                
-         .btn:hover
-         {
-            background-color:var(--color);
-            color:white;
-         } 
-         #num1, #num2{font-size: 50px; color:var(--color)}  
-
-            @media only screen and (max-width: 800px) {
-              #translator{background: var(--color)}  
-            }
-          img{height: 100px}
-          input{width: 150px;height: 80px;font-size: 56px}
-          </style>     
-        
-
-  
 </head>
 <body>
-   <div id="progressBarContainer">
-      <div id="progressBar">0 / 5</div>
-    </div>
-  <center>
-  <h2>Para comenzar a jugar, selecciona un nivel y haz click en el boton de "Iniciar"</h2>
-    <select id="nivelSelect">
-      <option value="1">1.Principiante</option>
-      <option value="2">2.Basico</option>
-      <option value="3">3.Pro</option>
-      <option value="4">4.Estrella</option>
-      <option value="5">5.Genio</option>
-      <option value="6">6.Leyenda</option>
-      <option value="7">7.Nivel Dios</option>
-    </select>
-  <button class="btn" onclick="cambiarNivel()">Iniciar</button>
 
-  <div id="juego">
-    <h3>Nivel <span id="nivel"></span></h3>
-    <p id="cosa"> <span id="num1"></span> <span id="num2"><span id="signoigual"></span></span>    <input type="number" id="respuesta" placeholder=""></p>
- 
-    <button class="btn" onclick="verificar()">Verificar</button>
-    <button class="btn" onclick="cambiarOperacion()">Nueva operación</button>
-    <p id="resultado"></p>
-
-    <p>✅ Aciertos: <span id="aciertos">0</span> | ❌ Intentos: <span id="intentos">0</span> | 🎯 Porcentaje: <span id="porcentaje">0%</span></p>
-    <p id="calificacion"></p>
-    <button class="btn" onclick="reiniciarContadores()">Nuevo Juego</button>
-    <p id="temporizador"></p> 
-    <img id="imagen" src="matboy.png"/>
-</center>
-   
-     
-
-
+  <div id="progressBarContainer">
+    <div id="progressBar">0 / 5</div>
   </div>
-   
 
+  <main>
+    <h2>Para comenzar a jugar, selecciona un nivel y haz clic en el botón de "Iniciar"</h2>
+    <select id="nivelSelect">
+      <option value="1">1. Principiante</option>
+      <option value="2">2. Básico</option>
+      <option value="3">3. Pro</option>
+      <option value="4">4. Estrella</option>
+      <option value="5">5. Genio</option>
+      <option value="6">6. Leyenda</option>
+      <option value="7">7. Nivel Dios</option>
+    </select>
+    <button class="btn" onclick="cambiarNivel()">Iniciar</button>
+
+    <div id="juego">
+      <h3>Nivel <span id="nivel">1</span></h3>
+      <p id="cosa">
+        <span id="expresion"></span> = 
+        <input type="number" id="respuesta" placeholder="">
+      </p>
+
+      <button class="btn" id="btnVerificar" onclick="verificar()">Verificar</button>
+      <button class="btn" onclick="cambiarOperacion()">Nueva operación</button>
+      <p id="resultado"></p>
+
+      <p>✅ Aciertos: <span id="aciertos">0</span> | ❌ Intentos: <span id="intentos">0</span> | 🎯 Porcentaje: <span id="porcentaje">0%</span></p>
+      <p id="calificacion"></p>
+      <button class="btn" onclick="reiniciarContadores()">Nuevo Juego</button>
+      <p id="temporizador"></p>
+      <img id="imagen" src="matboy.png" alt="Mascota">
+    </div>
+  </main>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <script>
     let nivelActual = 1;
-    let num1, num2;
     let aciertos = 0;
     let intentos = 0;
     let racha = 0;
+    let operacionActual = { expresion: "", respuesta: 0 };
+    let tiempoRestante = 0;
+    let temporizadorActivo = false;
+    let cuentaAtras;
 
     window.onload = function() {
       document.getElementById('nivelSelect').value = "1";
       document.getElementById('nivel').textContent = nivelActual;
-      generarSuma();
+      generarEjercicio();
     };
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function evalExpresionSeguro(expr) {
+      try {
+        // Soporta multiplicación con '×' y con 'x'
+        const normalizado = expr.replace(/×/g, '*').replace(/x/g, '*');
+        return Math.round(eval(normalizado));
+      } catch {
+        return -1;
+      }
+    }
+
     function generarOperacionPorNivel(nivel) {
-  let n1, n2, n3, operador, operadores, expresion, respuesta;
+      let n1, n2, n3, operador, operadores, expresion, respuesta;
 
-  switch(nivel) {
-    case 1:
-      // Nivel 1: suma de dos dígitos
-      n1 = rand(10, 99);
-      n2 = rand(10, 99);
-      respuesta = n1 + n2;
-      expresion = `${n1} + ${n2}`;
-      break;
+      switch(nivel) {
+        case 1:
+          n1 = rand(10, 99);
+          n2 = rand(10, 99);
+          respuesta = n1 + n2;
+          expresion = `${n1} + ${n2}`;
+          break;
 
-    case 2:
-      // Nivel 2: suma o resta (resultado siempre positivo)
-      n1 = rand(10, 99);
-      n2 = rand(10, 99);
-      operador = Math.random() < 0.5 ? '+' : '-';
-      if (operador === '-' && n1 < n2) [n1, n2] = [n2, n1]; // evitar negativos
-      respuesta = operador === '+' ? n1 + n2 : n1 - n2;
-      expresion = `${n1} ${operador} ${n2}`;
-      break;
+        case 2:
+          n1 = rand(10, 99);
+          n2 = rand(10, 99);
+          operador = Math.random() < 0.5 ? '+' : '-';
+          if (operador === '-' && n1 < n2) [n1, n2] = [n2, n1];
+          respuesta = operador === '+' ? n1 + n2 : n1 - n2;
+          expresion = `${n1} ${operador} ${n2}`;
+          break;
 
-    case 3:
-      // Nivel 3: suma o resta de tres números de dos dígitos (resultado > 0)
-      const nums = [rand(10, 99), rand(10, 99), rand(10, 99)];
-      operadores = [Math.random() < 0.5 ? '+' : '-', Math.random() < 0.5 ? '+' : '-'];
-      expresion = `${nums[0]} ${operadores[0]} ${nums[1]} ${operadores[1]} ${nums[2]}`;
-      respuesta = evalExpresionSeguro(expresion);
-      if (respuesta <= 0) return generarOperacionPorNivel(nivel); // intentar de nuevo si es negativa
-      break;
+        case 3:
+          const nums3 = [rand(10, 99), rand(10, 99), rand(10, 99)];
+          operadores = [Math.random() < 0.5 ? '+' : '-', Math.random() < 0.5 ? '+' : '-'];
+          expresion = `${nums3[0]} ${operadores[0]} ${nums3[1]} ${operadores[1]} ${nums3[2]}`;
+          respuesta = evalExpresionSeguro(expresion);
+          if (respuesta <= 0) return generarOperacionPorNivel(nivel);
+          break;
 
-    case 4:
-      // Nivel 4: multiplicación sencilla
-      const opciones = [
-        () => [rand(2, 9), rand(2, 9)],
-        () => [rand(10, 99), rand(2, 9)]
-      ];
-      [n1, n2] = opciones[Math.floor(Math.random() * opciones.length)]();
-      respuesta = n1 * n2;
-      expresion = `${n1} × ${n2}`;
-      break;
+        case 4:
+          const opciones = [
+            () => [rand(2, 9), rand(2, 9)],
+            () => [rand(10, 99), rand(2, 9)]
+          ];
+          [n1, n2] = opciones[Math.floor(Math.random() * opciones.length)]();
+          respuesta = n1 * n2;
+          expresion = `${n1} × ${n2}`;
+          break;
 
-    case 5:
-      // Nivel 5: tres números, suma o resta, resultado > 0 + temporizador
-      const a = rand(10, 99), b = rand(10, 99), c = rand(10, 99);
-      operadores = [Math.random() < 0.5 ? '+' : '-', Math.random() < 0.5 ? '+' : '-'];
-      expresion = `${a} ${operadores[0]} ${b} ${operadores[1]} ${c}`;
-      respuesta = evalExpresionSeguro(expresion);
-      if (respuesta <= 0) return generarOperacionPorNivel(nivel);
-      break;
+        case 5:
+          const a = rand(10, 99), b = rand(10, 99), c = rand(10, 99);
+          operadores = [Math.random() < 0.5 ? '+' : '-', Math.random() < 0.5 ? '+' : '-'];
+          expresion = `${a} ${operadores[0]} ${b} ${operadores[1]} ${c}`;
+          respuesta = evalExpresionSeguro(expresion);
+          if (respuesta <= 0) return generarOperacionPorNivel(nivel);
+          break;
 
-    case 6:
-      // Nivel 6: multiplicación con uno de 2 dígitos × uno de 1 dígito + temporizador
-      n1 = rand(10, 99);
-      n2 = rand(2, 9);
-      respuesta = n1 * n2;
-      expresion = `${n1} × ${n2}`;
-      break;
+        case 6:
+          n1 = rand(10, 99);
+          n2 = rand(2, 9);
+          respuesta = n1 * n2;
+          expresion = `${n1} × ${n2}`;
+          break;
 
-    case 7:
-      // Nivel 7: combinación respetando orden de operaciones, sin temporizador
-      const ops = ['+', '-', 'x'];
-      const op1 = ops[rand(0, 2)];
-      const op2 = ops[rand(0, 2)];
-      n1 = rand(10, 99);
-      n2 = rand(2, 9);
-      n3 = rand(2, 9);
-      expresion = `${n1} ${op1} ${n2} ${op2} ${n3}`;
-      respuesta = evalExpresionSeguro(expresion);
-      break;
+        case 7:
+          const ops = ['+', '-', 'x'];
+          const op1 = ops[rand(0, 2)];
+          const op2 = ops[rand(0, 2)];
+          n1 = rand(10, 99);
+          n2 = rand(2, 9);
+          n3 = rand(2, 9);
+          expresion = `${n1} ${op1} ${n2} ${op2} ${n3}`;
+          respuesta = evalExpresionSeguro(expresion);
+          break;
 
-    default:
-      return null;
-  }
+        default:
+          return null;
+      }
 
-  return { expresion, respuesta };
-}
-
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function evalExpresionSeguro(expr) {
-  try {
-    return Math.round(eval(expr.replace(/×/g, '*')));
-  } catch {
-    return -1;
-  }
-}
+      return { expresion, respuesta };
+    }
 
     function cambiarNivel() {
-  nivelActual = parseInt(document.getElementById('nivelSelect').value);
-  racha = 0;
-  actualizarRacha();
-  document.getElementById('nivel').textContent = nivelActual;
-  document.getElementById('signoigual').textContent = "=";
-  generarEjercicio();
-}
-
-
-   let operacionActual = { expresion: "", respuesta: 0 };
-let tiempoRestante = 0;
-let temporizadorActivo = false;
-let cuentaAtras;
-
-function generarEjercicio() {
-  operacionActual = generarOperacionPorNivel(nivelActual);
-  document.getElementById('num1').textContent = operacionActual.expresion;
-  document.getElementById('respuesta').value = "";
-  document.getElementById('resultado').textContent = "";
-
-  if (nivelActual === 5 || nivelActual === 6) {
-    iniciarTemporizador(20);
-  } else {
-    detenerTemporizador();
-  }
-}
-
-
-   function verificar() {
-  if (temporizadorActivo) detenerTemporizador();
-
-  const respuestaUsuario = parseInt(document.getElementById('respuesta').value);
-  const resultado = document.getElementById('resultado');
-  const imagen = document.getElementById('imagen');
-  intentos++;
-
-  if (respuestaUsuario === operacionActual.respuesta) {
-    aciertos++;
-    racha++;
-    resultado.textContent = "✅ ¡Correcto!";
-    resultado.style.color = "green";
-    imagen.src="boyhappy.png";
-
-    if (racha === 5 && nivelActual < 7) {
-      nivelActual++;
-      document.getElementById('nivelSelect').value = nivelActual;
+      nivelActual = parseInt(document.getElementById('nivelSelect').value);
+      racha = 0;
+      actualizarRacha();
       document.getElementById('nivel').textContent = nivelActual;
-      racha = 0;
-      alert(`🎉 ¡Subiste al nivel ${nivelActual}!`);
+      generarEjercicio();
     }
-  } else {
-    resultado.textContent = `❌ Incorrecto. Era ${operacionActual.respuesta}`;
-    resultado.style.color = "red";
-    racha = Math.max(racha - 1, 0);
-    imagen.src="boytriste.png";
-;
-  }
 
-  actualizarContadores();
-  actualizarRacha();
-  setTimeout(generarEjercicio, 800);
-}
+    function generarEjercicio() {
+      operacionActual = generarOperacionPorNivel(nivelActual);
+      document.getElementById('expresion').textContent = operacionActual.expresion;
+      document.getElementById('respuesta').value = "";
+      document.getElementById('respuesta').disabled = false;
+      document.getElementById('btnVerificar').disabled = false;
+      document.getElementById('resultado').textContent = "";
 
-function iniciarTemporizador(segundos) {
-  detenerTemporizador();
-  tiempoRestante = segundos;
-  temporizadorActivo = true;
-  document.getElementById('temporizador').textContent = `⏳ Tiempo: ${tiempoRestante}s`;
+      if (nivelActual === 5 || nivelActual === 6) {
+        iniciarTemporizador(20);
+      } else {
+        detenerTemporizador();
+        document.getElementById('temporizador').textContent = "";
+      }
+    }
 
-  cuentaAtras = setInterval(() => {
-    tiempoRestante--;
-    if (tiempoRestante <= 0) {
-      clearInterval(cuentaAtras);
-      temporizadorActivo = false;
-      document.getElementById('resultado').textContent = "⏰ ¡Tiempo agotado!";
-      document.getElementById('resultado').style.color = "red";
+    function verificar() {
+      if (temporizadorActivo) detenerTemporizador();
+
+      const inputRespuesta = document.getElementById('respuesta');
+      if (inputRespuesta.value.trim() === "") return;
+
+      const respuestaUsuario = parseInt(inputRespuesta.value);
+      const resultado = document.getElementById('resultado');
+      const imagen = document.getElementById('imagen');
       intentos++;
-      racha = 0;
+
+      document.getElementById('respuesta').disabled = true;
+      document.getElementById('btnVerificar').disabled = true;
+
+      if (respuestaUsuario === operacionActual.respuesta) {
+        aciertos++;
+        racha++;
+        resultado.textContent = "✅ ¡Correcto!";
+        resultado.style.color = "green";
+        imagen.src = "boyhappy.png";
+
+        if (racha === 5 && nivelActual < 7) {
+          nivelActual++;
+          document.getElementById('nivelSelect').value = nivelActual;
+          document.getElementById('nivel').textContent = nivelActual;
+          racha = 0;
+          alert(`🎉 ¡Subiste al nivel ${nivelActual}!`);
+        }
+      } else {
+        resultado.textContent = `❌ Incorrecto. Era ${operacionActual.respuesta}`;
+        resultado.style.color = "red";
+        racha = Math.max(racha - 1, 0);
+        imagen.src = "boytriste.png";
+      }
+
       actualizarContadores();
       actualizarRacha();
-      setTimeout(generarEjercicio, 800);
+      setTimeout(generarEjercicio, 1000);
     }
-  }, 1000);
-}
 
-function detenerTemporizador() {
-  clearInterval(cuentaAtras);
-  temporizadorActivo = false;
-}
+    function iniciarTemporizador(segundos) {
+      detenerTemporizador();
+      tiempoRestante = segundos;
+      temporizadorActivo = true;
+      document.getElementById('temporizador').textContent = `⏳ Tiempo: ${tiempoRestante}s`;
+
+      cuentaAtras = setInterval(() => {
+        tiempoRestante--;
+        document.getElementById('temporizador').textContent = `⏳ Tiempo: ${tiempoRestante}s`;
+        if (tiempoRestante <= 0) {
+          clearInterval(cuentaAtras);
+          temporizadorActivo = false;
+          document.getElementById('resultado').textContent = "⏰ ¡Tiempo agotado!";
+          document.getElementById('resultado').style.color = "red";
+          document.getElementById('respuesta').disabled = true;
+          document.getElementById('btnVerificar').disabled = true;
+          intentos++;
+          racha = 0;
+          actualizarContadores();
+          actualizarRacha();
+          setTimeout(generarEjercicio, 1000);
+        }
+      }, 1000);
+    }
+
+    function detenerTemporizador() {
+      clearInterval(cuentaAtras);
+      temporizadorActivo = false;
+    }
 
     function actualizarContadores() {
       const porcentaje = intentos > 0 ? Math.round((aciertos / intentos) * 100) : 0;
@@ -318,10 +338,20 @@ function detenerTemporizador() {
       racha = 0;
       actualizarContadores();
       actualizarRacha();
+      generarEjercicio();
     }
 
     function cambiarOperacion() {
-      generarSuma();
+      generarEjercicio();
+    }
+
+    // Registro del Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registrado correctamente'))
+          .catch(err => console.error('Error registrando Service Worker:', err));
+      });
     }
   </script>
 </body>
