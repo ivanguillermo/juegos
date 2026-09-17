@@ -8,14 +8,14 @@
   "theme_color": "#4fdb98",
   "icons": [
     {
-      "src": "operaciones_logo.png",
+      "src": "operaciones_logo.jpg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpg"
     },
     {
-      "src": "operaciones_logo.png",
+      "src": "operaciones_logo.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpg"
     }
   ]
 }
