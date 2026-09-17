@@ -1,0 +1,21 @@
+{
+  "name": "Juego de Operaciones Matemáticas",
+  "short_name": "Matemáticas",
+  "description": "Práctica de operaciones matemáticas por niveles.",
+  "start_url": "./operaciones.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4fdb98",
+  "icons": [
+    {
+      "src": "operaciones_logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "operaciones_logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
