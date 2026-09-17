@@ -105,7 +105,7 @@
       <p id="calificacion"></p>
       <button class="btn" onclick="reiniciarContadores()">Nuevo Juego</button>
       <p id="temporizador"></p>
-      <img id="imagen" src="matboy.png" alt="Mascota">
+      <img id="imagen" src="matboy.png" alt="Mascota"/>
     </div>
   </main>
 
@@ -269,7 +269,7 @@
         resultado.textContent = `❌ Incorrecto. Era ${operacionActual.respuesta}`;
         resultado.style.color = "red";
         racha = Math.max(racha - 1, 0);
-        imagen.src = "boytriste.png";
+        imagen.src = "sadgirl.png";
       }
 
       actualizarContadores();
