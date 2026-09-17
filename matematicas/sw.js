@@ -2,7 +2,7 @@ const CACHE_NAME = 'matematicas-v1';
 const ASSETS = [
   './',
   './operaciones.html',
-  './operaciones_logo.png',
+  './operaciones_logo.jpg',
   './matboy.png',
   './boyhappy.png',
   './boytriste.png'
